@@ -1,0 +1,291 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Propiedades REMAX Power</title>
+<meta name="robots" content="noindex, nofollow">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Figtree:wght@400;500;600;700&family=Sora:wght@500;600;700&display=swap">
+<style>
+/* Layout: barra de filtros fija arriba, grilla de fichas, ficha completa en panel modal */
+:root{
+  --bg:#f4f6f9; --surface:#ffffff; --ink:#0f1b2d; --muted:#5b6678; --line:#dde3ec;
+  --accent:#d6202c; --blue:#1e4fa1; --chip:#eaf0f8; --chip-ink:#1e4fa1; --shade:rgba(15,27,45,.55);
+  --display:"Sora",ui-sans-serif,system-ui,sans-serif; --body:"Figtree",ui-sans-serif,system-ui,-apple-system,"Segoe UI",sans-serif;
+  color-scheme:light;
+}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){
+  --bg:#0c1320; --surface:#141e2f; --ink:#e9eef6; --muted:#9aa6b8; --line:#26334a;
+  --accent:#ff4d57; --blue:#7fa8ef; --chip:#1c2a43; --chip-ink:#a9c4f5; --shade:rgba(0,0,0,.7); color-scheme:dark}}
+:root[data-theme="dark"]{
+  --bg:#0c1320; --surface:#141e2f; --ink:#e9eef6; --muted:#9aa6b8; --line:#26334a;
+  --accent:#ff4d57; --blue:#7fa8ef; --chip:#1c2a43; --chip-ink:#a9c4f5; --shade:rgba(0,0,0,.7); color-scheme:dark}
+*{box-sizing:border-box}
+html,body{margin:0}
+body{background:var(--bg);color:var(--ink);font:15px/1.5 var(--body);-webkit-font-smoothing:antialiased}
+img{max-width:100%;display:block}
+button,select,input{font:inherit;color:inherit}
+.wrap{max-width:1280px;margin:0 auto;padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px))}
+header.top{padding-block:28px 18px}
+.brand{display:flex;flex-wrap:wrap;align-items:baseline;justify-content:space-between;gap:8px 24px}
+h1{font:700 clamp(24px,3.4vw,34px)/1.1 var(--display);margin:0;letter-spacing:-.02em;text-wrap:balance}
+h1 span{color:var(--accent)}
+.meta{color:var(--muted);font-size:13px}
+.bar{position:sticky;top:0;z-index:5;background:var(--bg);border-bottom:1px solid var(--line)}
+.bar .wrap{display:flex;flex-wrap:wrap;gap:8px;padding-block:12px}
+.seg{display:inline-flex;background:var(--surface);border:1px solid var(--line);border-radius:10px;padding:3px}
+.seg button{border:0;background:none;padding:6px 12px;border-radius:7px;cursor:pointer;font-weight:600;font-size:14px;color:var(--muted)}
+.seg button[aria-pressed="true"]{background:var(--ink);color:var(--bg)}
+.f{background:var(--surface);border:1px solid var(--line);border-radius:10px;padding:8px 10px;font-size:14px;min-width:0}
+.f:focus-visible,.seg button:focus-visible,.card:focus-visible,.btn:focus-visible{outline:2px solid var(--blue);outline-offset:2px}
+#q{flex:1 1 220px}
+.price{display:flex;gap:6px;align-items:center}
+.price input{width:110px}
+.summary{display:flex;justify-content:space-between;align-items:center;gap:12px;padding-block:16px 8px;color:var(--muted);font-size:14px}
+.summary b{color:var(--ink);font-variant-numeric:tabular-nums}
+.linkbtn{background:none;border:0;color:var(--blue);cursor:pointer;font-weight:600;padding:0}
+.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(270px,1fr));gap:18px;padding-block:8px 24px}
+.card{background:var(--surface);border:1px solid var(--line);border-radius:14px;overflow:hidden;cursor:pointer;display:flex;flex-direction:column;text-align:left;padding:0;transition:transform .15s,box-shadow .15s}
+.card:hover{transform:translateY(-2px);box-shadow:0 10px 24px -14px var(--shade)}
+.ph{position:relative;aspect-ratio:16/10;background:var(--chip);overflow:hidden}
+.ph img{width:100%;height:100%;object-fit:cover}
+.tag{position:absolute;top:10px;left:10px;background:var(--surface);color:var(--ink);font-size:12px;font-weight:700;padding:3px 9px;border-radius:999px;letter-spacing:.02em}
+.tag.Alquiler,.tag.Temporario{background:var(--blue);color:#fff}
+.count{position:absolute;bottom:10px;right:10px;background:rgba(0,0,0,.6);color:#fff;font-size:12px;padding:2px 8px;border-radius:999px}
+.body{padding:14px 16px 16px;display:flex;flex-direction:column;gap:4px;min-width:0}
+.pr{font:700 20px/1.2 var(--display);font-variant-numeric:tabular-nums}
+.pr small{font:600 12px var(--body);color:var(--muted);margin-left:4px}
+.exp{font-size:13px;color:var(--muted)}
+.addr{font-weight:600;margin-top:4px}
+.area{font-size:13px;color:var(--muted)}
+.specs{display:flex;flex-wrap:wrap;gap:4px 12px;font-size:13px;color:var(--muted);margin-top:6px;font-variant-numeric:tabular-nums}
+.specs b{color:var(--ink);font-weight:600}
+.ttl{font-size:12px;text-transform:uppercase;letter-spacing:.04em;color:var(--muted);margin-top:8px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.more{display:flex;justify-content:center;padding-block:8px 48px}
+.btn{display:inline-flex;align-items:center;gap:8px;border:1px solid var(--line);background:var(--surface);padding:10px 18px;border-radius:10px;font-weight:600;cursor:pointer;text-decoration:none;color:var(--ink)}
+.btn.primary{background:var(--ink);color:var(--bg);border-color:var(--ink)}
+.btn.wa{background:#1f9d55;border-color:#1f9d55;color:#fff}
+.empty{padding:60px 0;text-align:center;color:var(--muted)}
+footer{border-top:1px solid var(--line);color:var(--muted);font-size:12px}
+footer .wrap{padding-block:20px 32px}
+/* modal */
+dialog{border:0;padding:0;max-width:min(1100px,100vw);width:100%;max-height:100dvh;background:var(--surface);color:var(--ink);border-radius:16px}
+dialog::backdrop{background:var(--shade)}
+.dlg{display:grid;grid-template-columns:minmax(0,1.35fr) minmax(0,1fr);max-height:92dvh}
+.gal{background:#000;position:relative;display:flex;flex-direction:column;min-height:0}
+.gal .main{position:relative;flex:1;min-height:280px;display:flex;align-items:center;justify-content:center}
+.gal .main img{max-height:70dvh;width:100%;object-fit:contain}
+.nav{position:absolute;top:50%;transform:translateY(-50%);width:42px;height:42px;border-radius:50%;border:0;background:rgba(255,255,255,.9);color:#111;font-size:22px;cursor:pointer;display:grid;place-items:center}
+.nav.p{left:10px}.nav.n{right:10px}
+.pos{position:absolute;bottom:10px;left:50%;transform:translateX(-50%);color:#fff;background:rgba(0,0,0,.55);font-size:12px;padding:2px 10px;border-radius:999px;font-variant-numeric:tabular-nums}
+.thumbs{display:flex;gap:6px;overflow-x:auto;padding:8px;background:#0b0b0b}
+.thumbs img{width:72px;height:54px;object-fit:cover;border-radius:4px;opacity:.55;cursor:pointer;flex:none;border:2px solid transparent}
+.thumbs img.on{opacity:1;border-color:#fff}
+.info{padding:22px 24px 28px;overflow-y:auto;display:flex;flex-direction:column;gap:14px;min-width:0}
+.x{position:absolute;top:10px;right:10px;z-index:2;width:38px;height:38px;border-radius:50%;border:0;background:rgba(255,255,255,.92);color:#111;font-size:20px;cursor:pointer}
+.info h2{font:600 17px/1.3 var(--display);margin:0;text-wrap:balance}
+.kv{display:grid;grid-template-columns:repeat(auto-fill,minmax(120px,1fr));gap:10px;font-variant-numeric:tabular-nums}
+.kv div{background:var(--bg);border-radius:10px;padding:8px 10px}
+.kv small{display:block;font-size:11px;text-transform:uppercase;letter-spacing:.05em;color:var(--muted)}
+.kv b{font-weight:600}
+.desc{white-space:pre-line;font-size:14px;line-height:1.6;max-height:260px;overflow:auto;border-top:1px solid var(--line);padding-top:12px}
+.chips{display:flex;flex-wrap:wrap;gap:6px}
+.chips span{background:var(--chip);color:var(--chip-ink);font-size:12px;padding:3px 9px;border-radius:999px}
+.agent{display:flex;gap:12px;align-items:center;border-top:1px solid var(--line);padding-top:14px}
+.agent img{width:52px;height:52px;border-radius:50%;object-fit:cover;background:var(--chip)}
+.agent .who{min-width:0;font-size:13px;color:var(--muted)}
+.agent .who b{display:block;color:var(--ink);font-size:15px}
+.agent .who span{user-select:all;word-break:break-all}
+.acts{display:flex;flex-wrap:wrap;gap:8px}
+.code{font-size:12px;color:var(--muted)}
+@media (max-width:820px){
+  .dlg{grid-template-columns:1fr;max-height:none}
+  dialog{border-radius:0;max-height:100dvh;height:100dvh}
+  .dlg{height:100%;overflow-y:auto;display:block}
+  .gal .main img{max-height:46dvh}
+  .info{overflow:visible}
+  .price input{width:90px}
+}
+@media (prefers-reduced-motion:reduce){.card{transition:none}.card:hover{transform:none}}
+</style>
+</head>
+<body>
+<header class="top"><div class="wrap brand">
+  <h1>Propiedades <span>REMAX Power</span></h1>
+  <div class="meta" id="meta"></div>
+</div></header>
+
+<div class="bar"><div class="wrap">
+  <input class="f" id="q" type="search" placeholder="Buscar dirección, barrio, título o código" aria-label="Buscar">
+  <div class="seg" role="group" aria-label="Operación" id="ops">
+    <button type="button" data-op="" aria-pressed="true">Todas</button>
+    <button type="button" data-op="Venta" aria-pressed="false">Venta</button>
+    <button type="button" data-op="Alquiler" aria-pressed="false">Alquiler</button>
+    <button type="button" data-op="Temporario" aria-pressed="false">Temporario</button>
+  </div>
+  <select class="f" id="type" aria-label="Tipo"><option value="">Todos los tipos</option></select>
+  <select class="f" id="area" aria-label="Barrio"><option value="">Todos los barrios</option></select>
+  <select class="f" id="rooms" aria-label="Ambientes">
+    <option value="">Ambientes</option><option value="1">1 amb.</option><option value="2">2 amb.</option>
+    <option value="3">3 amb.</option><option value="4">4 amb.</option><option value="5">5+ amb.</option>
+  </select>
+  <div class="price">
+    <select class="f" id="cur" aria-label="Moneda"><option value="USD">USD</option><option value="ARS">ARS</option></select>
+    <input class="f" id="pmin" type="number" min="0" inputmode="numeric" placeholder="Desde" aria-label="Precio desde">
+    <input class="f" id="pmax" type="number" min="0" inputmode="numeric" placeholder="Hasta" aria-label="Precio hasta">
+  </div>
+  <select class="f" id="sort" aria-label="Ordenar">
+    <option value="new">Más recientes</option><option value="pa">Menor precio</option>
+    <option value="pd">Mayor precio</option><option value="m2">Mayor superficie</option>
+  </select>
+</div></div>
+
+<main class="wrap">
+  <div class="summary"><div><b id="n">0</b> propiedades</div><button class="linkbtn" id="reset" type="button">Limpiar filtros</button></div>
+  <div class="grid" id="grid"></div>
+  <div class="empty" id="empty" hidden>No hay propiedades con esos filtros.</div>
+  <div class="more"><button class="btn" id="more" type="button" hidden>Ver más propiedades</button></div>
+</main>
+
+<footer><div class="wrap">
+  REMAX Power · José Hernández 2719, CABA · +54 (11) 4787-9300 · power@remax.com.ar<br>
+  Corredor público inmobiliario responsable: Sabrina Cocconi, CPI 6800 / CSI 6258. Valores y medidas aproximados; consultá al agente por la información actualizada.
+</div></footer>
+
+<dialog id="dlg" aria-label="Ficha de la propiedad"><div class="dlg" id="dlgBody"></div></dialog>
+
+<script type="application/json" id="data">__DATA__</script>
+<script>
+const DATA = JSON.parse(document.getElementById('data').textContent);
+const ITEMS = DATA.items;
+const $ = id => document.getElementById(id);
+const PAGE = 48;
+let shown = PAGE, op = '', list = [];
+const sm = u => u.replace('/1080xAUTO/', '/360x200/');
+const fmt = n => n ? n.toLocaleString('es-AR') : '';
+const esc = s => String(s ?? '').replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+const norm = s => String(s ?? '').normalize('NFD').replace(/[̀-ͯ]/g, '').toLowerCase();
+ITEMS.forEach((p, i) => { p._i = i; p._s = norm([p.addr, p.area, p.title, p.code, p.type, p.sub, p.agent.name].join(' ')); });
+
+$('meta').textContent = `${DATA.total} propiedades publicadas · actualizado ${DATA.updated}`;
+const opts = (sel, vals) => vals.forEach(([v, c]) => sel.insertAdjacentHTML('beforeend', `<option value="${esc(v)}">${esc(v)} (${c})</option>`));
+const tally = key => Object.entries(ITEMS.reduce((m, p) => (p[key] && (m[p[key]] = (m[p[key]] || 0) + 1), m), {}));
+opts($('type'), tally('type').sort((a, b) => b[1] - a[1]));
+opts($('area'), tally('area').sort((a, b) => a[0].localeCompare(b[0], 'es')));
+
+function priceHTML(p, big) {
+  if (!p.price) return `<div class="pr">Consultar</div>`;
+  return `<div class="pr">${fmt(p.price)}<small>${esc(p.cur)}</small></div>` +
+    (p.exp ? `<div class="exp">+ ${fmt(p.exp)} ${esc(p.expCur)} expensas</div>` : (big ? '' : '<div class="exp">&nbsp;</div>'));
+}
+function specs(p) {
+  const s = [];
+  if (p.mTot) s.push(`<span><b>${fmt(p.mTot)}</b> m² tot.</span>`);
+  else if (p.mLand) s.push(`<span><b>${fmt(p.mLand)}</b> m² terreno</span>`);
+  if (p.rooms) s.push(`<span><b>${p.rooms}</b> amb.</span>`);
+  if (p.beds) s.push(`<span><b>${p.beds}</b> dorm.</span>`);
+  if (p.baths) s.push(`<span><b>${p.baths}</b> baño${p.baths > 1 ? 's' : ''}</span>`);
+  return s.join('');
+}
+function card(p) {
+  const img = p.photos[0] ? `<img src="${esc(sm(p.photos[0]))}" alt="" loading="lazy" referrerpolicy="no-referrer">` : '';
+  return `<button class="card" type="button" data-i="${p._i}">
+    <div class="ph">${img}<span class="tag ${esc(p.op)}">${esc(p.op)}</span>${p.photos.length > 1 ? `<span class="count">${p.photos.length} fotos</span>` : ''}</div>
+    <div class="body">${priceHTML(p)}
+      <div class="addr">${esc(p.addr)}</div>
+      <div class="area">${esc([p.sub || p.type, p.area].filter(Boolean).join(' · '))}</div>
+      <div class="specs">${specs(p)}</div>
+      <div class="ttl">${esc(p.title)}</div>
+    </div></button>`;
+}
+function apply() {
+  const q = norm($('q').value.trim()), t = $('type').value, a = $('area').value, r = +$('rooms').value,
+        cur = $('cur').value, mn = +$('pmin').value || 0, mx = +$('pmax').value || 0;
+  list = ITEMS.filter(p => (!op || p.op === op) && (!t || p.type === t) && (!a || p.area === a)
+    && (!r || (r === 5 ? p.rooms >= 5 : p.rooms === r))
+    && (!(mn || mx) || (p.cur === cur && p.price && (!mn || p.price >= mn) && (!mx || p.price <= mx)))
+    && (!q || q.split(/\s+/).every(w => p._s.includes(w))));
+  const s = $('sort').value;
+  if (s === 'pa') list.sort((x, y) => (x.price || 9e15) - (y.price || 9e15));
+  if (s === 'pd') list.sort((x, y) => (y.price || 0) - (x.price || 0));
+  if (s === 'm2') list.sort((x, y) => (y.mTot || y.mLand) - (x.mTot || x.mLand));
+  shown = PAGE; render();
+}
+function render() {
+  $('n').textContent = list.length.toLocaleString('es-AR');
+  $('grid').innerHTML = list.slice(0, shown).map(card).join('');
+  $('empty').hidden = list.length > 0;
+  $('more').hidden = shown >= list.length;
+}
+['q', 'type', 'area', 'rooms', 'cur', 'pmin', 'pmax', 'sort'].forEach(id => $(id).addEventListener('input', apply));
+$('ops').addEventListener('click', e => {
+  const b = e.target.closest('button'); if (!b) return;
+  op = b.dataset.op; $('ops').querySelectorAll('button').forEach(x => x.setAttribute('aria-pressed', x === b)); apply();
+});
+$('reset').addEventListener('click', () => {
+  ['q', 'type', 'area', 'rooms', 'pmin', 'pmax'].forEach(id => $(id).value = ''); $('sort').value = 'new'; $('cur').value = 'USD';
+  $('ops').querySelector('button').click();
+});
+$('more').addEventListener('click', () => { shown += PAGE; render(); });
+$('grid').addEventListener('click', e => { const c = e.target.closest('.card'); if (c) open(ITEMS[+c.dataset.i]); });
+
+/* ficha */
+let cur = null, idx = 0;
+function wa(phone) { const d = String(phone).replace(/\D/g, ''); return d ? 'https://wa.me/' + d.replace(/^54(11|\d{3,4})15/, '549$1').replace(/^54(?!9)/, '549') : ''; }
+function open(p) {
+  cur = p; idx = 0;
+  const kv = [['Operación', p.op], ['Tipo', [p.type, p.sub].filter(Boolean).join(' ')], ['Sup. total', p.mTot && fmt(p.mTot) + ' m²'],
+    ['Sup. cubierta', p.mCov && fmt(p.mCov) + ' m²'], ['Terreno', p.mLand && fmt(p.mLand) + ' m²'], ['Ambientes', p.rooms],
+    ['Dormitorios', p.beds], ['Baños', p.baths], ['Cocheras', p.park], ['Antigüedad', p.year && (new Date().getFullYear() - p.year) + ' años'],
+    ['Apto crédito', p.credit && 'Sí'], ['Apto profesional', p.pro && 'Sí']].filter(x => x[1]);
+  const w = wa(p.agent.phone);
+  const msg = encodeURIComponent(`Hola ${p.agent.name.split(' ')[0]}, te consulto por la propiedad de ${p.addr} (${p.url})`);
+  const map = p.lat ? `https://www.google.com/maps?q=${p.lat},${p.lng}` : '';
+  $('dlgBody').innerHTML = `
+    <div class="gal"><button class="x" type="button" id="close" aria-label="Cerrar">×</button>
+      <div class="main"><img id="big" alt="Foto de la propiedad" referrerpolicy="no-referrer">
+        ${p.photos.length > 1 ? '<button class="nav p" id="prev" type="button" aria-label="Foto anterior">‹</button><button class="nav n" id="next" type="button" aria-label="Foto siguiente">›</button>' : ''}
+        <span class="pos" id="pos"></span></div>
+      <div class="thumbs" id="thumbs">${p.photos.map((u, i) => `<img src="${esc(sm(u))}" data-k="${i}" alt="" loading="lazy" referrerpolicy="no-referrer">`).join('')}</div>
+    </div>
+    <div class="info">
+      ${priceHTML(p, true)}
+      <div><div class="addr">${esc(p.addr)}</div><div class="area">${esc(p.area)}</div></div>
+      <h2>${esc(p.title)}</h2>
+      <div class="kv">${kv.map(([k, v]) => `<div><small>${k}</small><b>${esc(v)}</b></div>`).join('')}</div>
+      ${p.desc ? `<div class="desc">${esc(p.desc)}</div>` : ''}
+      ${p.feats.length ? `<div class="chips">${p.feats.map(f => `<span>${esc(f)}</span>`).join('')}</div>` : ''}
+      <div class="agent">${p.agent.photo ? `<img src="${esc(p.agent.photo)}" alt="" referrerpolicy="no-referrer">` : ''}
+        <div class="who"><b>${esc(p.agent.name)}</b><span>${esc(p.agent.phone)}</span><br><span>${esc(p.agent.email)}</span></div></div>
+      <div class="acts">
+        ${w ? `<a class="btn wa" href="${w}?text=${msg}" target="_blank" rel="noopener">WhatsApp al agente</a>` : ''}
+        <a class="btn" href="${esc(p.url)}" target="_blank" rel="noopener">Ver en remax.com.ar</a>
+        ${map ? `<a class="btn" href="${map}" target="_blank" rel="noopener">Mapa</a>` : ''}
+      </div>
+      <div class="code">Código ${esc(p.code)}</div>
+    </div>`;
+  show(0);
+  $('close').onclick = () => $('dlg').close();
+  if ($('prev')) { $('prev').onclick = () => show(idx - 1); $('next').onclick = () => show(idx + 1); }
+  $('thumbs').onclick = e => { const k = e.target.dataset.k; if (k) show(+k); };
+  if (!$('dlg').open) $('dlg').showModal();
+  try { history.replaceState(null, '', '#' + p.slug); } catch (e) {}
+}
+function show(k) {
+  const n = cur.photos.length; if (!n) { $('pos').hidden = true; return; }
+  idx = (k + n) % n; $('big').src = cur.photos[idx]; $('pos').textContent = `${idx + 1} / ${n}`;
+  $('thumbs').querySelectorAll('img').forEach((im, i) => { im.classList.toggle('on', i === idx); if (i === idx) im.scrollIntoView({block: 'nearest', inline: 'center'}); });
+}
+$('dlg').addEventListener('close', () => { try { history.replaceState(null, '', location.pathname + location.search); } catch (e) {} });
+$('dlg').addEventListener('click', e => { if (e.target === $('dlg')) $('dlg').close(); });
+document.addEventListener('keydown', e => {
+  if (!$('dlg').open || !cur) return;
+  if (e.key === 'ArrowRight') show(idx + 1); if (e.key === 'ArrowLeft') show(idx - 1);
+});
+apply();
+const h = decodeURIComponent(location.hash.slice(1)); const hit = h && ITEMS.find(p => p.slug === h); if (hit) open(hit);
+</script>
+</body>
+</html>
