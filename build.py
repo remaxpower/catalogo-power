@@ -68,6 +68,14 @@ def photo(raw, size="1080xAUTO"):
     return f"{CDN}/{parts[0]}/{parts[1]}/{size}/{parts[2]}.jpg"
 
 
+def agent_photo(a):
+    raw = a.get("rawPhoto") or ""
+    parts = raw.split("/")
+    if len(parts) == 3:
+        return f"{CDN}/{parts[0]}/{parts[1]}/180x180/{parts[2]}.webp"
+    return f"{CDN}/{a['photo']}" if a.get("photo") else ""
+
+
 def num(v):
     try:
         v = float(v or 0)
@@ -104,7 +112,7 @@ def compact(d):
         "feats": feats, "photos": photos, "video": d.get("video") or "",
         "lat": loc[1] if len(loc) == 2 else None, "lng": loc[0] if len(loc) == 2 else None,
         "agent": {"name": (a.get("name") or "").strip(), "phone": phone or "", "email": email,
-                  "photo": f"{CDN}/{a['photo']}" if a.get("photo") else ""},
+                  "photo": agent_photo(a)},
         "url": f"https://www.remax.com.ar/listings/{d.get('slug')}",
     }
 
