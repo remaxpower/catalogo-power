@@ -29,6 +29,8 @@ jobs:
         run: |
           python3 build.py site/index.html site/propiedades.json
           cp robots.txt site/
+      - name: Generar feed de Meta, fichas y listado para la IA de WhatsApp
+        run: python3 extras.py site https://remaxpower.github.io/catalogo-power
       - uses: actions/upload-pages-artifact@v3
         with:
           path: site
