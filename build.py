@@ -4,7 +4,7 @@ y genera un catálogo HTML autónomo (fotos enlazadas al CDN de RE/MAX).
 
 Uso: python3 build.py [salida.html] [datos.json]
 """
-import json, sys, time, html, datetime, urllib.request, urllib.error
+import json, sys, time, html, datetime, re, urllib.request, urllib.error
 from concurrent.futures import ThreadPoolExecutor
 from pathlib import Path
 
@@ -103,7 +103,7 @@ def compact(d):
         "price": num(d.get("price")) if d.get("priceExposure", True) else 0,
         "cur": (d.get("currency") or {}).get("value", ""),
         "exp": num(d.get("expensesPrice")), "expCur": (d.get("expensesCurrency") or {}).get("value", ""),
-        "addr": d.get("displayAddress") or "", "area": (geo.get("label") or "").replace(", Capital Federal", ", CABA"),
+        "addr": d.get("displayAddress") or "", "area": re.sub(r"</?b>", "", geo.get("label") or "").replace(", Capital Federal", ", CABA"),
         "rooms": num(d.get("totalRooms")), "beds": num(d.get("bedrooms")), "baths": num(d.get("bathrooms")),
         "park": num(d.get("parkingSpaces")), "year": num(d.get("yearBuilt")),
         "mTot": num(d.get("dimensionTotalBuilt")), "mCov": num(d.get("dimensionCovered")),
