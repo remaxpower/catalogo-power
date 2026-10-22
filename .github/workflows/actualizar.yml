@@ -31,6 +31,9 @@ jobs:
           cp robots.txt site/
       - name: Generar feed de Meta, fichas y listado para la IA de WhatsApp
         run: python3 extras.py site https://remaxpower.github.io/catalogo-power
+      - name: Generar catálogo de todo RE/MAX (sección /remax)
+        continue-on-error: true   # si falla, el catálogo de Power se publica igual
+        run: python3 build_remax.py site/remax https://remaxpower.github.io/catalogo-power/remax
       - uses: actions/upload-pages-artifact@v3
         with:
           path: site
