@@ -1,2 +1,15 @@
+# Bloqueado para buscadores; permitido para los robots de Meta (agente de WhatsApp / Meta AI)
+User-agent: meta-externalagent
+Allow: /
+
+User-agent: meta-externalfetcher
+Allow: /
+
+User-agent: facebookexternalhit
+Allow: /
+
+User-agent: FacebookBot
+Allow: /
+
 User-agent: *
 Disallow: /

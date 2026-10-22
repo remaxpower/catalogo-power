@@ -117,6 +117,109 @@ def compact(d):
     }
 
 
+# ---------- Páginas de texto simple (para que el agente de WhatsApp/Meta pueda leerlas) ----------
+import re, unicodedata
+
+SITE = "https://remaxpower.github.io/catalogo-power"
+TXT_HEAD = """<!doctype html><html lang="es"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="googlebot" content="noindex"><meta name="bingbot" content="noindex">
+<title>{title}</title>
+<style>body{{font:15px/1.55 system-ui,sans-serif;max-width:860px;margin:0 auto;padding:16px;color:#111}}
+h1{{font-size:22px}}h2{{font-size:17px;margin:22px 0 4px}}table{{border-collapse:collapse;width:100%}}
+td,th{{border-bottom:1px solid #ddd;padding:6px 4px;text-align:left;vertical-align:top}}a{{color:#0043ff}}
+.small{{color:#555;font-size:13px}}</style></head><body>"""
+TXT_FOOT = "</body></html>"
+
+
+def slugify(t):
+    t = unicodedata.normalize("NFD", t or "").encode("ascii", "ignore").decode().lower()
+    return re.sub(r"[^a-z0-9]+", "-", t).strip("-") or "sin-nombre"
+
+
+def money(v, cur):
+    return f"{cur} {int(v):,}".replace(",", ".") if v else "Consultar"
+
+
+def facts(p):
+    rows = [("Operación", p["op"]), ("Tipo", " ".join(x for x in [p["type"], p["sub"]] if x)),
+            ("Dirección (aproximada)", p["addr"]), ("Barrio / zona", p["area"]),
+            ("Precio", money(p["price"], p["cur"])),
+            ("Expensas", money(p["exp"], p["expCur"]) if p["exp"] else ""),
+            ("Ambientes", p["rooms"] or ""), ("Dormitorios", p["beds"] or ""), ("Baños", p["baths"] or ""),
+            ("Cocheras", p["park"] or ""), ("Superficie total", f'{p["mTot"]} m²' if p["mTot"] else ""),
+            ("Superficie cubierta", f'{p["mCov"]} m²' if p["mCov"] else ""),
+            ("Terreno", f'{p["mLand"]} m²' if p["mLand"] else ""),
+            ("Antigüedad", f'{datetime.date.today().year - p["year"]} años' if p["year"] else ""),
+            ("Apto crédito", "Sí" if p["credit"] else ""), ("Apto profesional", "Sí" if p["pro"] else ""),
+            ("Agente", p["agent"]["name"]), ("Teléfono del agente", p["agent"]["phone"]),
+            ("Email del agente", p["agent"]["email"]), ("Código", p["code"]),
+            ("Publicación oficial", p["url"])]
+    return [(k, v) for k, v in rows if v not in ("", None, 0)]
+
+
+def one_line(p):
+    bits = [f'{p["op"]} {p["type"]}'.strip(), p["addr"], p["area"],
+            f'{p["rooms"]} amb.' if p["rooms"] else "", f'{p["beds"]} dorm.' if p["beds"] else "",
+            f'{p["mTot"]} m²' if p["mTot"] else "", money(p["price"], p["cur"]),
+            f'Agente: {p["agent"]["name"]}']
+    return " · ".join(b for b in bits if b)
+
+
+def write_text_pages(props, root, updated):
+    esc = html.escape
+    root = Path(root)
+    (root / "propiedades").mkdir(parents=True, exist_ok=True)
+    (root / "agentes").mkdir(parents=True, exist_ok=True)
+    for p in props:
+        p["_page"] = f"propiedades/{p['slug']}.html"
+        rows = "".join(f"<tr><th>{esc(k)}</th><td>{esc(str(v))}</td></tr>" for k, v in facts(p))
+        feats = ", ".join(p["feats"])
+        body = (f"<h1>{esc(p['title'])}</h1><p>{esc(one_line(p))}</p><table>{rows}</table>"
+                + (f"<h2>Descripción</h2><p>{esc(p['desc']).replace(chr(10), '<br>')}</p>" if p["desc"] else "")
+                + (f"<h2>Características</h2><p>{esc(feats)}</p>" if feats else "")
+                + f"<p class='small'>REMAX Power · José Hernández 2719, CABA · +54 (11) 4787-9300. "
+                  f"Datos actualizados el {esc(updated)}. Medidas y valores aproximados; confirmar con el agente.</p>"
+                + f"<p><a href='../propiedades/index.html'>Ver todas las propiedades</a></p>")
+        (root / p["_page"]).write_text(TXT_HEAD.format(title=esc(p["title"])) + body + TXT_FOOT)
+
+    def listing(ps, title, intro, prefix):
+        trs = "".join(
+            f"<tr><td><a href='{prefix}{esc(p['_page'])}'>{esc(p['title'])}</a><br>"
+            f"<span class='small'>{esc(one_line(p))}</span></td></tr>" for p in ps)
+        return (TXT_HEAD.format(title=esc(title)) + f"<h1>{esc(title)}</h1><p>{esc(intro)}</p>"
+                f"<p class='small'>Actualizado el {esc(updated)} · {len(ps)} propiedades.</p><table>{trs}</table>" + TXT_FOOT)
+
+    (root / "propiedades" / "index.html").write_text(listing(
+        props, "Propiedades publicadas por REMAX Power",
+        "Listado completo de propiedades en venta, alquiler y alquiler temporario de REMAX Power (José Hernández 2719, Belgrano, CABA).",
+        "../"))
+    agents = {}
+    for p in props:
+        if p["agent"]["name"]:
+            agents.setdefault(p["agent"]["name"], []).append(p)
+    links = []
+    for name, ps in sorted(agents.items()):
+        slug = slugify(name)
+        (root / "agentes" / slug).mkdir(parents=True, exist_ok=True)
+        (root / "agentes" / slug / "index.html").write_text(listing(
+            ps, f"Propiedades de {name} · REMAX Power",
+            f"Propiedades que comercializa {name}, agente de REMAX Power (José Hernández 2719, Belgrano, CABA).",
+            "../../"))
+        links.append(f"<tr><td><a href='{slug}/index.html'>{html.escape(name)}</a> ({len(ps)})</td></tr>")
+    (root / "agentes" / "index.html").write_text(
+        TXT_HEAD.format(title="Agentes de REMAX Power") + "<h1>Agentes de REMAX Power</h1><table>"
+        + "".join(links) + "</table>" + TXT_FOOT)
+    # Texto plano para subir como documento si hace falta
+    txt = [f"PROPIEDADES DE REMAX POWER (actualizado {updated}) - {len(props)} propiedades", ""]
+    for p in props:
+        txt += [p["title"]] + [f"{k}: {v}" for k, v in facts(p)] + [f"Más info: {SITE}/{p['_page']}", ""]
+    (root / "propiedades.txt").write_text("\n".join(txt))
+    for p in props:
+        p.pop("_page", None)
+    return len(agents)
+
+
 def main():
     out = Path(sys.argv[1]) if len(sys.argv) > 1 else HERE / "propiedades-power.html"
     data_out = Path(sys.argv[2]) if len(sys.argv) > 2 else HERE / "propiedades-power.json"
@@ -137,7 +240,8 @@ def main():
     tpl = (HERE / "template.html").read_text()
     blob = json.dumps(payload, ensure_ascii=False).replace("</", "<\\/")
     out.write_text(tpl.replace("__DATA__", blob))
-    print(f"OK -> {out} ({out.stat().st_size // 1024} KB)", file=sys.stderr)
+    n_ag = write_text_pages(props, out.parent, payload["updated"])
+    print(f"OK -> {out} ({out.stat().st_size // 1024} KB) + {len(props)} fichas de texto, {n_ag} agentes", file=sys.stderr)
 
 
 if __name__ == "__main__":
