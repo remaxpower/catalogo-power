@@ -36,6 +36,9 @@ a{color:inherit}
 .nav .links button[aria-pressed="true"]{color:var(--blue);font-weight:700}
 .nav .links button:hover{color:var(--ink)}
 .pill{border:1px solid var(--blue);color:var(--blue);font-weight:700;border-radius:12px;padding:12px 22px;white-space:nowrap;text-decoration:none}
+.nav .right{display:flex;gap:8px;align-items:center}
+.pill.solid{background:var(--blue);color:#fff}
+@media (max-width:680px){.hide-sm{display:none}}
 
 /* banner */
 .banner{margin-top:0;height:290px;border-radius:0 0 16px 16px;border:1px solid var(--line);border-top:0;
@@ -185,7 +188,7 @@ footer img{height:40px;width:auto}
     <button type="button" data-op="Alquiler" aria-pressed="false">Alquilar</button>
     <button type="button" data-op="Temporario" aria-pressed="false">Temporario</button>
   </div>
-  <a class="pill" href="https://www.remax.com.ar/power" target="_blank" rel="noopener">Ver en remax.com.ar</a>
+  <div class="right"><a class="pill solid" href="remax/">Todo REMAX</a><a class="pill hide-sm" href="https://www.remax.com.ar/power" target="_blank" rel="noopener">Ver en remax.com.ar</a></div>
 </div></nav>
 
 <div class="wrap"><div class="banner" role="img" aria-label="Si está en REMAX, estás tranquilo"></div></div>

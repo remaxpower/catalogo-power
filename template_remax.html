@@ -1,0 +1,519 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Todo REMAX · Catálogo Power</title>
+<meta name="robots" content="noindex, nofollow">
+<link rel="icon" href="https://d1acdg20u0pmxj.cloudfront.net/assets/logos/new-logo-remax-balloon-2.svg">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Arimo:wght@400;700&family=Montserrat:wght@400;500;600;700&display=swap">
+<style>
+/* Estilo calcado de remax.com.ar/power: header con línea roja, banner, columna lateral de oficina + grilla de fichas */
+:root{
+  --bg:#fafafa; --white:#fff; --ink:#000; --ink2:#353535; --muted:#595959; --soft:#8a8a8a;
+  --line:#e7e7e7; --blue:#0043ff; --red:#ff1200; --wa:#25d366;
+  --shadow:0 1px 2px rgba(15,23,42,.05),0 4px 12px rgba(15,23,42,.06);
+  --font:"Montserrat",system-ui,-apple-system,"Segoe UI",sans-serif; --font2:"Arimo",Arial,sans-serif;
+  --icons:"https://d1acdg20u0pmxj.cloudfront.net/assets/icons/";
+  color-scheme:light;
+}
+*{box-sizing:border-box}
+html,body{margin:0}
+body{background:var(--bg);color:var(--ink);font:400 14px/1.45 var(--font);-webkit-font-smoothing:antialiased}
+img{max-width:100%;display:block}
+button,select,input{font:inherit;color:inherit}
+a{color:inherit}
+.wrap{max-width:1200px;margin:0 auto;padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px))}
+
+/* header */
+.nav{background:var(--white);border-top:4px solid var(--red);box-shadow:0 1px 0 var(--line);position:sticky;top:0;z-index:20}
+.nav .wrap{display:flex;align-items:center;justify-content:space-between;gap:16px;height:72px}
+.nav .logo img{height:48px;width:auto}
+.nav .links{display:flex;gap:6px}
+.nav .links button{background:none;border:0;padding:8px 18px;font-weight:500;color:var(--muted);cursor:pointer;border-radius:8px}
+.nav .links button[aria-pressed="true"]{color:var(--blue);font-weight:700}
+.nav .links button:hover{color:var(--ink)}
+.pill{border:1px solid var(--blue);color:var(--blue);font-weight:700;border-radius:12px;padding:12px 22px;white-space:nowrap;text-decoration:none}
+
+/* banner */
+.banner{margin-top:0;height:290px;border-radius:0 0 16px 16px;border:1px solid var(--line);border-top:0;
+  background:#f5f1ea url("https://d1acdg20u0pmxj.cloudfront.net/assets/images/profiles/agent-cover-new.webp") center/cover no-repeat}
+
+/* layout */
+.layout{display:grid;grid-template-columns:334px minmax(0,1fr);gap:24px;margin-top:-30px;padding-bottom:56px}
+.side{display:flex;flex-direction:column;gap:24px;padding-left:24px}
+.box{background:var(--white);border:2px solid var(--line);border-radius:16px}
+.office{text-align:center;position:relative;padding-top:72px}
+.office .avatar{position:absolute;top:-60px;left:50%;transform:translateX(-50%);width:120px;height:120px;border-radius:50%;background:var(--white);overflow:hidden;box-shadow:var(--shadow)}
+.office .avatar img{width:100%;height:100%;object-fit:contain}
+.office .k{font-size:14px;letter-spacing:.02em}
+.office h2{font-size:15px;font-weight:700;margin:2px 0}
+.office .addr{color:var(--muted);padding-bottom:16px;border-bottom:1px solid var(--line)}
+.office ul{list-style:none;margin:0;padding:22px 24px 26px;display:flex;flex-direction:column;gap:16px;text-align:left;color:var(--muted)}
+.office li{display:flex;gap:14px;align-items:center}
+.office li img{width:22px;height:22px}
+.box h3{font-size:17.5px;font-weight:700;color:var(--ink2);margin:0 0 14px}
+.filters{padding:24px 16px}
+.filters summary{list-style:none;cursor:pointer;display:flex;justify-content:space-between;align-items:center}
+.filters summary::-webkit-details-marker{display:none}
+.filters summary::after{content:"";width:22px;height:22px;background:url("https://d1acdg20u0pmxj.cloudfront.net/assets/icons/arrow-drop-down.svg") center/contain no-repeat;margin-bottom:14px}
+.filters[open] summary::after{transform:rotate(180deg)}
+.filters .fld{display:flex;flex-direction:column;gap:6px;margin-bottom:14px}
+.filters label{font-size:12px;font-weight:600;color:var(--ink2)}
+.in{background:var(--white);border:1px solid #d6d6d6;border-radius:8px;padding:10px 12px;width:100%;min-width:0;font-size:14px}
+.in:focus-visible,button:focus-visible,a:focus-visible{outline:2px solid var(--blue);outline-offset:2px}
+.row2{display:grid;grid-template-columns:1fr 1fr;gap:8px}
+.btn-blue{width:100%;background:var(--white);color:var(--blue);border:1px solid var(--blue);border-radius:12px;padding:10px;font-weight:700;cursor:pointer}
+.disc{padding:24px 16px;font-size:13px;line-height:1.3}
+.disc p{margin:0}
+
+.main{padding-top:54px;min-width:0}
+.tabs{display:flex;border-bottom:1px solid var(--line);max-width:456px}
+.tabs span{display:flex;align-items:center;gap:8px;padding:12px 54px;font-weight:700;color:var(--blue);border-bottom:2px solid var(--blue);margin-bottom:-1px}
+.tabs img{width:20px;height:20px}
+.toolbar{display:flex;justify-content:space-between;align-items:center;gap:12px;flex-wrap:wrap;margin:18px 0 22px;color:var(--muted);font-size:15px}
+.toolbar select{width:auto}
+.grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:24px 44px}
+.card{background:var(--white);border:2px solid var(--line);border-radius:16px;box-shadow:var(--shadow);overflow:hidden;cursor:pointer;text-align:left;padding:0;display:flex;flex-direction:column}
+.card .ph{position:relative;aspect-ratio:380/210;background:#eee}
+.card .ph img{width:100%;height:100%;object-fit:cover}
+.chip{position:absolute;top:12px;left:12px;background:var(--white);border:1px solid var(--line);border-radius:4px;font-size:12px;padding:2px 8px;color:var(--ink2)}
+.card .bd{padding:22px 24px 22px;display:flex;flex-direction:column;gap:2px}
+.price{font-size:26px;font-weight:700;line-height:1.2}
+.price small{font-size:14px;font-weight:700;margin-left:4px}
+.exp{font-size:13px;color:var(--ink2);margin-top:6px}
+.addr2{font-weight:500;font-size:14px}
+.zone{font-size:13px;color:var(--muted)}
+.specs{display:flex;flex-wrap:wrap;gap:10px 16px;margin-top:12px;font-size:13px}
+.specs span{display:flex;align-items:center;gap:8px}
+.specs img{width:24px;height:24px}
+.specs b{font-weight:700}
+.ttl{font-family:var(--font2);color:var(--ink2);font-size:14px;margin-top:14px;text-transform:uppercase}
+.more{display:flex;justify-content:center;margin-top:32px}
+.more button{max-width:280px}
+.empty{padding:60px 0;text-align:center;color:var(--muted)}
+footer{background:var(--white);border-top:1px solid var(--line);color:var(--muted);font-size:12px}
+footer .wrap{padding-block:24px;display:flex;justify-content:space-between;gap:16px;flex-wrap:wrap;align-items:center}
+footer img{height:40px;width:auto}
+
+/* ficha */
+.view{position:fixed;inset:0;z-index:30;background:var(--bg);overflow-y:auto;padding-bottom:env(safe-area-inset-bottom,0px)}
+.view .nav{position:sticky}
+.crumbs{background:var(--white);border-bottom:1px solid var(--line)}
+.crumbs .wrap{display:flex;align-items:center;gap:8px;height:56px;font-size:13px;color:var(--muted);overflow:hidden;white-space:nowrap}
+.crumbs button{background:none;border:0;display:flex;align-items:center;gap:6px;font-weight:700;color:var(--blue);cursor:pointer;padding:6px 0}
+.crumbs img{width:18px;height:18px}
+.crumbs b{color:var(--ink2);overflow:hidden;text-overflow:ellipsis}
+.v-title{font-size:24px;font-weight:700;margin:40px 0 24px;text-transform:uppercase;text-wrap:balance}
+.gallery{display:grid;grid-template-columns:minmax(0,3fr) minmax(0,1fr);height:clamp(260px,36vw,432px);gap:12px;overflow:hidden;background:var(--white);border:1px solid var(--line);border-radius:4px;padding:0}
+.g-main{position:relative;height:100%;background:#111;overflow:hidden}
+.g-main img{width:100%;height:100%;object-fit:cover}
+.g-nav{position:absolute;top:50%;transform:translateY(-50%);width:40px;height:40px;border-radius:50%;border:0;background:var(--white);box-shadow:var(--shadow);cursor:pointer;display:grid;place-items:center}
+.g-nav img{width:22px;height:22px}
+.g-nav.p{left:20px}.g-nav.n{right:20px}
+.g-count{position:absolute;right:24px;bottom:20px;background:rgba(0,0,0,.6);color:#fff;border-radius:8px;padding:4px 10px;font-size:12px;display:flex;gap:8px;align-items:center}
+.g-count img{width:20px;height:20px;filter:invert(1)}
+.g-side{display:flex;flex-direction:column;gap:12px;overflow-y:auto;min-height:0;padding:4px 4px 4px 0}
+.g-side img{width:100%;flex:none;aspect-ratio:292/132;object-fit:cover;cursor:pointer;border:3px solid transparent;border-radius:4px}
+.g-side img.on{border-color:var(--blue)}
+.v-cols{display:grid;grid-template-columns:minmax(0,1fr) 384px;gap:24px;margin-top:24px;padding-bottom:64px;align-items:start}
+.v-left{display:flex;flex-direction:column;gap:24px;min-width:0}
+.v-box{padding:24px 18px}
+.opchip{display:inline-block;border:1px solid var(--line);border-radius:4px;font-size:13px;padding:3px 8px;color:var(--ink2)}
+.v-price{font-size:22px;font-weight:700;border-left:2px solid var(--blue);padding-left:8px;margin:16px 0 20px}
+.kv{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:18px 24px;font-size:14px}
+.kv div{display:flex;gap:10px;align-items:center}
+.kv img{width:24px;height:24px}
+.desc{white-space:pre-line;line-height:1.7;font-size:14px}
+.feats{display:flex;flex-wrap:wrap;gap:8px}
+.feats span{border:1px solid var(--line);border-radius:4px;padding:4px 10px;font-size:13px;color:var(--ink2)}
+.contact{padding:24px;position:sticky;top:96px}
+.contact .top{display:flex;justify-content:space-between;align-items:center;margin-bottom:16px}
+.contact .top h3{margin:0}
+.circles{display:flex;gap:8px}
+.circles a{width:40px;height:40px;border-radius:50%;border:1px solid var(--blue);display:grid;place-items:center;background:var(--white)}
+.circles a.wa{background:var(--wa);border-color:var(--wa)}
+.circles a.wa img{filter:brightness(0) invert(1)}
+.circles img{width:22px;height:22px}
+.agent{display:flex;gap:14px;align-items:center}
+.agent img{width:58px;height:58px;border-radius:50%;object-fit:cover;background:#eee}
+.agent b{display:block;font-size:14px}
+.agent span{color:var(--ink2)}
+.cdata{margin-top:16px;display:flex;flex-direction:column;gap:6px;font-size:13px;color:var(--muted);word-break:break-word}
+.cdata span{user-select:all}
+.cpi{font-size:11px;color:var(--soft);margin-top:14px}
+.cpi span{font-size:14px}
+.links2{display:flex;flex-direction:column;gap:10px;margin-top:20px}
+.links2 a{text-align:center;text-decoration:none}
+.btn-solid{background:var(--blue);color:#fff;border-radius:12px;padding:11px;font-weight:700}
+
+@media (max-width:960px){
+  .layout{grid-template-columns:1fr;margin-top:-30px}
+  .side{padding-left:0}
+  .main{padding-top:0}
+  .grid{gap:20px}
+  .v-cols{grid-template-columns:1fr}
+  .contact{position:static}
+}
+@media (max-width:680px){
+  .nav .wrap{flex-wrap:wrap;height:auto;padding-block:10px 0;row-gap:4px}
+  .nav .links{order:3;width:100%;overflow-x:auto;justify-content:space-between}
+  .nav .links button{padding:8px 10px}
+  .view .nav .wrap{padding-bottom:10px}
+  .disc{display:none}
+  .banner{height:150px}
+  .grid{grid-template-columns:1fr}
+  .tabs span{padding:12px 24px}
+  .gallery{grid-template-columns:1fr;height:auto}
+  .g-main{aspect-ratio:4/3;height:auto}
+  .g-side{flex-direction:row;overflow-x:auto;padding:0 8px 8px}
+  .g-side img{width:110px;flex:none}
+  .kv{grid-template-columns:1fr 1fr}
+  .v-title{font-size:19px;margin:24px 0 16px}
+  .pill{padding:9px 14px;font-size:13px}
+}
+/* extras de la sección Todo RE/MAX */
+.nav .right{display:flex;gap:8px;align-items:center}
+.pill.solid{background:var(--blue);color:#fff}
+.office .big{font-size:28px;font-weight:700;color:var(--ink);margin-top:4px}
+.office .sub{color:var(--muted);font-size:13px;padding:0 20px 18px}
+.office .back{display:block;width:auto;margin:0 20px 22px}
+.card .ofi{font-size:12px;font-weight:700;color:var(--blue);margin-top:8px;text-transform:uppercase;letter-spacing:.02em}
+.loading{padding:60px 0;text-align:center;color:var(--muted)}
+.bar{height:4px;background:var(--line);border-radius:4px;overflow:hidden;max-width:320px;margin:14px auto 0}
+.bar i{display:block;height:100%;width:0;background:var(--blue);transition:width .2s}
+.note{font-size:12px;color:var(--soft);margin-top:8px}
+.desc.wait{color:var(--soft)}
+</style>
+</head>
+<body>
+<nav class="nav"><div class="wrap">
+  <a class="logo" href="#" aria-label="Inicio"><img src="https://d1acdg20u0pmxj.cloudfront.net/assets/logos/logo-remax-argentina-new.svg" alt="REMAX Argentina" width="120" height="48"></a>
+  <div class="links" id="ops" role="group" aria-label="Operación">
+    <button type="button" data-op="" aria-pressed="true">Todas</button>
+    <button type="button" data-op="0" aria-pressed="false">Comprar</button>
+    <button type="button" data-op="1" aria-pressed="false">Alquilar</button>
+    <button type="button" data-op="2" aria-pressed="false">Temporario</button>
+  </div>
+  <div class="right"><a class="pill solid" href="../">Catálogo Power</a></div>
+</div></nav>
+
+<div class="wrap"><div class="banner" role="img" aria-label="Si está en REMAX, estás tranquilo"></div></div>
+
+<div class="wrap layout">
+  <aside class="side">
+    <div class="box office">
+      <div class="avatar"><img src="https://d1acdg20u0pmxj.cloudfront.net/assets/logos/new-logo-remax-balloon-2.svg" alt="REMAX" style="padding:22px"></div>
+      <div class="k">TODO</div>
+      <h2>REMAX Argentina</h2>
+      <div class="big" id="tot">…</div>
+      <div class="sub">propiedades activas en todo el país · <span id="upd"></span></div>
+      <a class="btn-blue back" href="../" style="text-decoration:none">← Volver al catálogo Power</a>
+    </div>
+
+    <details class="box filters" id="fbox" open>
+      <summary><h3>Filtrar</h3></summary>
+      <div class="fld"><label for="prov">Provincia</label><select class="in" id="prov"></select></div>
+      <div class="fld"><label for="q">Buscar</label><input class="in" id="q" type="search" placeholder="Dirección, localidad, código, agente, oficina"></div>
+      <div class="fld"><label for="area">Zona / barrio</label><select class="in" id="area"><option value="">Todas</option></select></div>
+      <div class="fld"><label for="office">Oficina</label><select class="in" id="office"><option value="">Todas</option></select></div>
+      <div class="fld"><label for="type">Tipo de propiedad</label><select class="in" id="type"><option value="">Todos</option></select></div>
+      <div class="fld"><label for="rooms">Ambientes</label>
+        <select class="in" id="rooms"><option value="">Todos</option><option value="1">1 ambiente</option><option value="2">2 ambientes</option><option value="3">3 ambientes</option><option value="4">4 ambientes</option><option value="5">5 o más</option></select></div>
+      <div class="fld"><label for="pmin">Precio</label>
+        <div class="row2"><select class="in" id="cur" aria-label="Moneda"><option value="0">USD</option><option value="1">ARS</option></select><span></span></div>
+        <div class="row2"><input class="in" id="pmin" type="number" min="0" inputmode="numeric" placeholder="Desde"><input class="in" id="pmax" type="number" min="0" inputmode="numeric" placeholder="Hasta" aria-label="Precio hasta"></div></div>
+      <button class="btn-blue" id="reset" type="button">Limpiar filtros</button>
+    </details>
+
+    <div class="box disc">
+      <h3>Disclaimer</h3>
+      <p>Catálogo interno de REMAX Power con las propiedades publicadas por toda la red en remax.com.ar. Cada publicación es responsabilidad de su oficina y del corredor a cargo. Precios y datos aproximados; consultar al agente.</p>
+    </div>
+  </aside>
+
+  <main class="main">
+    <div class="tabs"><span><img src="https://d1acdg20u0pmxj.cloudfront.net/assets/icons/home.svg" alt="">Todo REMAX</span></div>
+    <div class="toolbar"><div><span id="n">0</span> propiedades <span id="where"></span></div>
+      <select class="in" id="sort" aria-label="Ordenar"><option value="new">Más recientes</option><option value="pa">Menor precio</option><option value="pd">Mayor precio</option><option value="m2">Mayor superficie</option></select></div>
+    <div class="loading" id="loading">Cargando propiedades…<div class="bar"><i id="barfill"></i></div></div>
+    <div class="grid" id="grid"></div>
+    <div class="empty" id="empty" hidden>No hay propiedades con esos filtros.</div>
+    <div class="more"><button class="btn-blue" id="more" type="button" hidden>Ver más</button></div>
+  </main>
+</div>
+
+<footer><div class="wrap">
+  <img src="https://d1acdg20u0pmxj.cloudfront.net/assets/logos/logo-remax-horizontal-argentina.svg" alt="REMAX Argentina">
+  <div>Catálogo interno de REMAX Power · datos públicos de remax.com.ar, actualizados a diario</div>
+</div></footer>
+
+<div class="view" id="view" hidden></div>
+
+<script>
+const CDN = 'https://d1acdg20u0pmxj.cloudfront.net';
+const API = 'https://api-ar.redremax.com/remaxweb-ar/api';
+const IC = n => CDN + '/assets/icons/' + n + '.svg';
+const $ = id => document.getElementById(id);
+const PAGE = 24, ALL = '__all__';
+const OPN = ['Venta', 'Alquiler', 'Temporario'], CURN = ['USD', 'ARS'];
+const TYPES = {deposito:'Depósito',consultorio:'Consultorio',chacra:'Chacra',quinta:'Quinta',galpon:'Galpón',cochera:'Cochera',
+  fondo_de_comercio:'Fondo de comercio',campo:'Campo',terrenos_y_lotes:'Terreno / lote',local:'Local',oficina:'Oficina',otros:'Otros',
+  edificio:'Edificio',hotel:'Hotel',ph:'PH',casa_triplex:'Casa',casa_duplex:'Casa',casa:'Casa',departamento_triplex:'Departamento',
+  departamento_semipiso:'Departamento',departamento_piso:'Departamento',departamento_penthouse:'Departamento',
+  departamento_monoambiente:'Departamento',departamento_loft:'Departamento',departamento_estandar:'Departamento',departamento_duplex:'Departamento'};
+const tname = t => TYPES[t] || String(t).replace(/_/g, ' ').replace(/^./, c => c.toUpperCase());
+const fmt = n => n ? n.toLocaleString('es-AR') : '';
+const esc = s => String(s ?? '').replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+const norm = s => String(s ?? '').normalize('NFD').replace(/[̀-ͯ]/g, '').toLowerCase();
+const pic = (path, size) => path ? `${CDN}/listings/${path.split('/')[0]}/${size}/${path.split('/')[1]}.jpg` : '';
+const store = {get(k){try{return localStorage.getItem(k)}catch(e){return null}}, set(k,v){try{localStorage.setItem(k,v)}catch(e){}}};
+
+let META = null, ITEMS = [], list = [], shown = PAGE, op = '', provSel = '';
+const cache = {};
+
+async function loadProv(slug) {
+  if (!cache[slug]) {
+    const r = await fetch('data/' + slug + '.json');
+    if (!r.ok) throw new Error('No se pudo cargar ' + slug);
+    const d = await r.json(), pv = META.provinces.find(p => p.slug === slug);
+    cache[slug] = d.items.map(x => {
+      const a = d.agents[x[20]] || ['', '', '', '', 0];
+      const loc = x[10], parts = loc ? loc.split(', ') : [];
+      const p = {slug: x[0], code: x[1], title: x[2], op: x[3], type: tname(x[4]), price: x[5], cur: x[6], exp: x[7], expCur: x[8],
+        addr: x[9], loc, area: parts.length ? parts[parts.length - 1] : '', prov: pv.name, provSlug: slug,
+        rooms: x[11], beds: x[12], baths: x[13], mTot: x[14], mCov: x[15], mLand: x[16], lat: x[17], lng: x[18], photo: x[19],
+        ent: x[21], agent: {name: a[0], phone: a[1], email: a[2], photo: a[3]}, office: META.offices[a[4]] || ''};
+      p._s = norm([p.addr, p.loc, p.prov, p.title, p.code, p.type, p.agent.name, p.office].join(' '));
+      return p;
+    });
+  }
+  return cache[slug];
+}
+
+async function selectProv(v) {
+  provSel = v; store.set('remax_prov', v);
+  $('grid').innerHTML = ''; $('empty').hidden = true; $('more').hidden = true; $('loading').hidden = false;
+  const slugs = v === ALL ? META.provinces.map(p => p.slug) : [v];
+  try {
+    let done = 0; const out = [];
+    for (const s of slugs) { out.push(await loadProv(s)); done++; $('barfill').style.width = (100 * done / slugs.length) + '%'; }
+    ITEMS = [].concat(...out); ITEMS.forEach((p, i) => p._i = i);
+  } catch (e) {
+    $('loading').textContent = 'No se pudieron cargar las propiedades. Probá recargar la página.'; return;
+  }
+  $('loading').hidden = true; $('barfill').style.width = '0';
+  fillFilters(); apply();
+}
+
+const tally = f => Object.entries(ITEMS.reduce((m, p) => { const k = f(p); if (k) m[k] = (m[k] || 0) + 1; return m; }, {}));
+function fill(sel, rows, first) {
+  const keep = sel.value;
+  sel.innerHTML = `<option value="">${first}</option>` + rows.map(([v, c]) => `<option value="${esc(v)}">${esc(v)} (${c.toLocaleString('es-AR')})</option>`).join('');
+  if (rows.some(r => r[0] === keep)) sel.value = keep;
+}
+function fillFilters() {
+  const byName = (a, b) => a[0].localeCompare(b[0], 'es');
+  fill($('area'), tally(p => provSel === ALL ? p.prov : p.area).sort(byName), 'Todas');
+  $('area').previousElementSibling.textContent = provSel === ALL ? 'Provincia (dentro de todo el país)' : 'Zona / barrio';
+  fill($('office'), tally(p => p.office).sort(byName), 'Todas');
+  fill($('type'), tally(p => p.type).sort((a, b) => b[1] - a[1]), 'Todos');
+}
+
+function specs(p) {
+  const s = [];
+  if (p.mTot) s.push(`<span><img src="${IC('total-surface')}" alt=""><b>${fmt(p.mTot)}</b> m² totales</span>`);
+  else if (p.mLand) s.push(`<span><img src="${IC('total-surface')}" alt=""><b>${fmt(p.mLand)}</b> m² terreno</span>`);
+  if (p.mCov) s.push(`<span><img src="${IC('covered-surface')}" alt=""><b>${fmt(p.mCov)}</b> m² cubiertos</span>`);
+  if (p.rooms) s.push(`<span><img src="${IC('rooms')}" alt=""><b>${p.rooms}</b> ambiente${p.rooms > 1 ? 's' : ''}</span>`);
+  if (p.baths) s.push(`<span><img src="${IC('bathrooms')}" alt=""><b>${p.baths}</b> baño${p.baths > 1 ? 's' : ''}</span>`);
+  return s.join('');
+}
+const priceTxt = p => p.price ? (p.ent ? 'Desde ' : '') + fmt(p.price) + ` <small>${esc(CURN[p.cur] ?? p.cur)}</small>` : 'Consultar precio';
+function card(p) {
+  const img = p.photo ? `<img src="${esc(pic(p.photo, '360x200'))}" alt="" loading="lazy" referrerpolicy="no-referrer">` : '';
+  return `<button class="card" type="button" data-i="${p._i}">
+    <div class="ph">${img}<span class="chip">${p.ent ? 'Emprendimiento' : esc(OPN[p.op])}</span></div>
+    <div class="bd">
+      <div class="price">${priceTxt(p)}</div>
+      ${p.exp ? `<div class="exp">+ ${fmt(p.exp)} ${esc(CURN[p.expCur] ?? '')} expensas</div>` : ''}
+      <div class="addr2">${esc(p.addr)}</div>
+      <div class="zone">${esc(p.loc)}${provSel === ALL ? ', ' + esc(p.prov) : ''}</div>
+      <div class="specs">${specs(p)}</div>
+      <div class="ttl">${esc(p.title)}</div>
+      <div class="ofi">${esc(p.office)}</div>
+    </div></button>`;
+}
+function apply() {
+  const q = norm($('q').value.trim()), t = $('type').value, a = $('area').value, o = $('office').value, r = +$('rooms').value,
+        cur = +$('cur').value, mn = +$('pmin').value || 0, mx = +$('pmax').value || 0, words = q ? q.split(/\s+/) : [];
+  list = ITEMS.filter(p => (op === '' || p.op === +op) && (!t || p.type === t) && (!o || p.office === o)
+    && (!a || (provSel === ALL ? p.prov : p.area) === a)
+    && (!r || (r === 5 ? p.rooms >= 5 : p.rooms === r))
+    && (!(mn || mx) || (p.cur === cur && p.price && (!mn || p.price >= mn) && (!mx || p.price <= mx)))
+    && (!words.length || words.every(w => p._s.includes(w))));
+  const s = $('sort').value;
+  if (s === 'pa') list.sort((x, y) => (x.price || 9e15) - (y.price || 9e15));
+  if (s === 'pd') list.sort((x, y) => (y.price || 0) - (x.price || 0));
+  if (s === 'm2') list.sort((x, y) => (y.mTot || y.mLand) - (x.mTot || x.mLand));
+  shown = PAGE; render();
+}
+function render() {
+  $('n').textContent = list.length.toLocaleString('es-AR');
+  const pv = META.provinces.find(p => p.slug === provSel);
+  $('where').textContent = provSel === ALL ? 'en todo el país' : 'en ' + (pv ? pv.name : '');
+  $('grid').innerHTML = list.slice(0, shown).map(card).join('');
+  $('empty').hidden = list.length > 0;
+  $('more').hidden = shown >= list.length;
+}
+let tq; $('q').addEventListener('input', () => { clearTimeout(tq); tq = setTimeout(apply, 180); });
+['type', 'area', 'office', 'rooms', 'cur', 'pmin', 'pmax', 'sort'].forEach(id => $(id).addEventListener('input', apply));
+$('prov').addEventListener('change', () => selectProv($('prov').value));
+$('ops').addEventListener('click', e => {
+  const b = e.target.closest('button'); if (!b) return;
+  op = b.dataset.op; $('ops').querySelectorAll('button').forEach(x => x.setAttribute('aria-pressed', x === b)); apply();
+});
+$('reset').addEventListener('click', () => {
+  ['q', 'type', 'area', 'office', 'rooms', 'pmin', 'pmax'].forEach(id => $(id).value = ''); $('sort').value = 'new'; $('cur').value = '0';
+  $('ops').querySelector('button').click();
+});
+$('more').addEventListener('click', () => { shown += PAGE; render(); });
+$('grid').addEventListener('click', e => { const c = e.target.closest('.card'); if (c) openView(ITEMS[+c.dataset.i]); });
+
+/* ficha */
+let cur = null, idx = 0, photos = [];
+function wa(phone) { const d = String(phone).replace(/\D/g, ''); return d ? 'https://wa.me/' + d.replace(/^54(11|\d{3,4})15/, '549$1').replace(/^54(?!9)/, '549') : ''; }
+function kvHtml(p) {
+  const kv = [
+    [p.mTot && `<b>${fmt(p.mTot)}</b> m² totales`, 'total-surface'], [p.mCov && `<b>${fmt(p.mCov)}</b> m² cubiertos`, 'covered-surface'],
+    [p.mLand && `<b>${fmt(p.mLand)}</b> m² terreno`, 'total-surface'], [p.rooms && `<b>${p.rooms}</b> ambientes`, 'rooms'],
+    [p.beds && `<b>${p.beds}</b> dormitorio${p.beds > 1 ? 's' : ''}`, 'bedrooms'], [p.baths && `<b>${p.baths}</b> baño${p.baths > 1 ? 's' : ''}`, 'bathrooms'],
+    [p.park && `<b>${p.park}</b> cochera${p.park > 1 ? 's' : ''}`, 'garage'], [p.year && `<b>${new Date().getFullYear() - p.year}</b> años antigüedad`, 'antiquity'],
+    [p.pro && 'Apto profesional', 'suitable-professional']].filter(x => x[0]);
+  return kv.map(([t, ic]) => `<div><img src="${IC(ic)}" alt=""><span>${t}</span></div>`).join('');
+}
+function contactHtml(p) {
+  const w = wa(p.agent.phone), first = p.agent.name.split(' ')[0], url = 'https://www.remax.com.ar/listings/' + p.slug;
+  const msg = encodeURIComponent(`Hola ${first}, te consulto por la propiedad de ${p.addr} (${url})`);
+  const tel = String(p.agent.phone).replace(/[^\d+]/g, '');
+  const aph = p.agent.photo ? `${CDN}/agents/${p.agent.photo.split('/')[0]}/180x180/${p.agent.photo.split('/')[1]}.webp` : '';
+  return `<div class="top"><h3>Contacto</h3><div class="circles">
+      ${w ? `<a class="wa" href="${w}?text=${msg}" target="_blank" rel="noopener" aria-label="WhatsApp"><img src="${IC('whatsapp-outlined')}" alt=""></a>` : ''}
+      ${tel ? `<a href="tel:${esc(tel)}" aria-label="Llamar"><img src="${IC('phone-outlined')}" alt=""></a>` : ''}
+      ${p.agent.email ? `<a href="mailto:${esc(p.agent.email)}" aria-label="Email"><img src="${IC('email-outlined')}" alt=""></a>` : ''}</div></div>
+    <div class="agent">${aph ? `<img src="${esc(aph)}" alt="" referrerpolicy="no-referrer">` : ''}<div><b>${esc(p.agent.name)}</b><span>${esc(p.office)}</span></div></div>
+    <div class="cdata"><span>${esc(p.agent.phone)}</span><span>${esc(p.agent.email)}</span></div>
+    ${p.brokers ? `<div class="cpi">Corredores responsables: <span>${esc(p.brokers)}</span></div>` : ''}
+    <div class="cpi">Código: <span>${esc(p.code)}</span></div>
+    <div class="links2"><a class="btn-solid" href="${esc(url)}" target="_blank" rel="noopener">Ver publicación oficial</a></div>`;
+}
+function openView(p) {
+  cur = p; idx = 0; photos = p.photo ? [pic(p.photo, '1080xAUTO')] : [];
+  const url = 'https://www.remax.com.ar/listings/' + p.slug, map = p.lat ? `https://www.google.com/maps?q=${p.lat},${p.lng}` : '';
+  $('view').innerHTML = `
+    <nav class="nav"><div class="wrap">
+      <a class="logo" href="#" aria-label="Volver al catálogo" data-back><img src="https://d1acdg20u0pmxj.cloudfront.net/assets/logos/logo-remax-argentina-new.svg" alt="REMAX Argentina" width="120" height="48"></a>
+      <a class="pill" href="${esc(url)}" target="_blank" rel="noopener">Ver en remax.com.ar</a></div></nav>
+    <div class="crumbs"><div class="wrap"><button type="button" data-back><img src="${IC('arrow-back-outline')}" alt="">Volver</button>
+      <span>›</span><span>${esc(p.prov)}</span><span>›</span><span>${esc(p.area)}</span><span>›</span><b>${esc(p.title)}</b></div></div>
+    <div class="wrap">
+      <h1 class="v-title">${esc(p.title)}</h1>
+      <div class="gallery">
+        <div class="g-main"><img id="big" alt="Foto de la propiedad" referrerpolicy="no-referrer">
+          <button class="g-nav p" id="prev" type="button" aria-label="Foto anterior" hidden><img src="${IC('arrow-left')}" alt=""></button><button class="g-nav n" id="next" type="button" aria-label="Foto siguiente" hidden><img src="${IC('arrow-right')}" alt=""></button>
+          <span class="g-count"><img src="${IC('photo-outlined')}" alt=""><span id="pos"></span></span></div>
+        <div class="g-side" id="thumbs"></div>
+      </div>
+      <div class="v-cols">
+        <div class="v-left">
+          <div class="box v-box">
+            <span class="opchip">${p.ent ? 'Emprendimiento' : esc(OPN[p.op])}</span>
+            <div class="v-price">${p.price ? (p.ent ? 'Desde ' : '') + fmt(p.price) + ' ' + esc(CURN[p.cur] ?? p.cur) : 'Consultar precio'}</div>
+            ${p.exp ? `<p style="margin:0 0 16px">Expensas : ${fmt(p.exp)} ${esc(CURN[p.expCur] ?? '')}</p>` : ''}
+            <div class="kv" id="kv">${kvHtml(p)}</div>
+          </div>
+          <div class="box v-box"><h3>Ubicación</h3><div>${esc(p.addr)}<br><span style="color:var(--muted)">${esc(p.loc)}, ${esc(p.prov)}</span></div>
+            ${map ? `<p style="margin:12px 0 0"><a href="${map}" target="_blank" rel="noopener" style="color:var(--blue);font-weight:700">Ver en Google Maps</a></p>` : ''}</div>
+          <div class="box v-box"><h3>Descripción</h3><div class="desc wait" id="desc">Cargando la ficha completa…</div></div>
+          <div class="box v-box" id="featbox" hidden><h3>Características</h3><div class="feats" id="feats"></div></div>
+        </div>
+        <aside class="box contact" id="contact">${contactHtml(p)}</aside>
+      </div>
+    </div>`;
+  drawPhotos();
+  $('view').hidden = false; $('view').scrollTop = 0; document.body.style.overflow = 'hidden';
+  $('prev').onclick = () => show(idx - 1); $('next').onclick = () => show(idx + 1);
+  $('thumbs').onclick = e => { const k = e.target.dataset.k; if (k) show(+k); };
+  $('view').querySelectorAll('[data-back]').forEach(b => b.addEventListener('click', e => { e.preventDefault(); closeView(); }));
+  try { history.pushState({v: 1}, '', '#' + p.provSlug + '/' + p.slug); } catch (e) {}
+  loadDetail(p);
+}
+async function loadDetail(p) {
+  try {
+    const r = await fetch(`${API}/listings/findBySlug/${encodeURIComponent(p.slug)}`);
+    const d = (await r.json()).data;
+    if (cur !== p || !d) throw 0;
+    const ph = (d.photos || []).filter(x => x.rawValue).sort((a, b) => (a.position || 0) - (b.position || 0))
+      .map(x => { const s = x.rawValue.split('/'); return `${CDN}/${s[0]}/${s[1]}/1080xAUTO/${s[2]}.jpg`; });
+    if (ph.length) { photos = ph; drawPhotos(); }
+    $('desc').classList.remove('wait');
+    $('desc').textContent = (d.description || '').trim() || 'Sin descripción.';
+    const feats = (d.features || []).map(f => f.value).filter(Boolean);
+    if (feats.length) { $('feats').innerHTML = feats.map(f => `<span>${esc(f)}</span>`).join(''); $('featbox').hidden = false; }
+    Object.assign(p, {park: d.parkingSpaces || 0, year: d.yearBuilt || 0, pro: !!d.professionalUse});
+    $('kv').innerHTML = kvHtml(p);
+    const lb = (d.listBroker || []).map(b => [b.name, b.license].filter(Boolean).join(' ')).join(' / ');
+    if (lb) { p.brokers = lb; $('contact').innerHTML = contactHtml(p); }
+  } catch (e) {
+    if (cur !== p) return;
+    $('desc').classList.remove('wait');
+    $('desc').innerHTML = `No se pudo traer la ficha completa. <a href="https://www.remax.com.ar/listings/${esc(p.slug)}" target="_blank" rel="noopener" style="color:var(--blue);font-weight:700">Verla en remax.com.ar</a>`;
+  }
+}
+function drawPhotos() {
+  $('thumbs').innerHTML = photos.map((u, i) => `<img src="${esc(u.replace('/1080xAUTO/', '/360x200/'))}" data-k="${i}" alt="Foto ${i + 1}" loading="lazy" referrerpolicy="no-referrer">`).join('');
+  $('prev').hidden = $('next').hidden = photos.length < 2;
+  show(0);
+}
+function closeView(fromPop) {
+  if ($('view').hidden) return;
+  $('view').hidden = true; $('view').innerHTML = ''; document.body.style.overflow = ''; cur = null;
+  if (!fromPop) { try { history.pushState(null, '', location.pathname + location.search); } catch (e) {} }
+}
+function show(k) {
+  const n = photos.length; if (!n) { $('pos').textContent = '0'; $('big').removeAttribute('src'); return; }
+  idx = (k + n) % n; $('big').src = photos[idx]; $('pos').textContent = `${idx + 1}/${n}`;
+  $('thumbs').querySelectorAll('img').forEach((im, i) => { im.classList.toggle('on', i === idx); if (i === idx) im.scrollIntoView({block: 'nearest', inline: 'nearest'}); });
+}
+async function fromHash() {
+  const h = decodeURIComponent(location.hash.slice(1)); if (!h.includes('/')) return closeView(true);
+  const [ps, slug] = h.split('/');
+  if (!META.provinces.some(p => p.slug === ps)) return;
+  const items = await loadProv(ps).catch(() => []); const hit = items.find(p => p.slug === slug);
+  if (hit) openView(hit); else closeView(true);
+}
+window.addEventListener('popstate', fromHash);
+document.addEventListener('keydown', e => {
+  if (!cur) return;
+  if (e.key === 'Escape') closeView(); if (e.key === 'ArrowRight') show(idx + 1); if (e.key === 'ArrowLeft') show(idx - 1);
+});
+if (matchMedia('(max-width:960px)').matches) $('fbox').open = false;
+
+(async () => {
+  try { META = await (await fetch('data/meta.json')).json(); }
+  catch (e) { $('loading').textContent = 'No se pudo cargar el catálogo. Probá recargar la página.'; return; }
+  $('tot').textContent = META.total.toLocaleString('es-AR');
+  $('upd').textContent = 'actualizado ' + META.updated;
+  $('prov').innerHTML = META.provinces.map(p => `<option value="${p.slug}">${esc(p.name)} (${p.n.toLocaleString('es-AR')})</option>`).join('')
+    + `<option value="${ALL}">Todo el país (${META.total.toLocaleString('es-AR')}, tarda más)</option>`;
+  const hashProv = decodeURIComponent(location.hash.slice(1)).split('/')[0];
+  const saved = [hashProv, store.get('remax_prov'), 'caba'].find(s => s && (s === ALL || META.provinces.some(p => p.slug === s)));
+  $('prov').value = saved || META.provinces[0].slug;
+  await selectProv($('prov').value);
+  fromHash();
+})();
+</script>
+</body>
+</html>
